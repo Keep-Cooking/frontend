@@ -16,8 +16,8 @@ export default defineNuxtConfig({
   shadcn: {
     /**
      * Prefix for all the imported component
-     */
-    prefix: 'shadcn-',
-    componentDir: '~/components/shadcn'
+    //  */
+    // prefix: 'shadcn-',
+    // componentDir: '~/components/shadcn'
   },
 })
