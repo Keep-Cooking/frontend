@@ -1,5 +1,7 @@
+<script setup lang="ts">
+import { Button } from "@/components/ui/button"
+</script>
+
 <template>
-  <div>
-    <shadcn-Button>Click me</shadcn-Button>
-  </div>
+  <Button>Button</Button>
 </template>
