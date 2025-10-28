@@ -1,75 +1,45 @@
-# Nuxt Minimal Starter
+# Keep Cooking Frontend
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+A simple Nuxt application for Keep Cooking.
 
-## Setup
+## Getting Started
 
-Make sure to install dependencies:
+Install dependencies:
 
 ```bash
-# npm
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+Run the development server:
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-Build the application for production:
+## Tech Stack
 
-```bash
-# npm
-npm run build
+- **Nuxt 4** - Vue framework
+- **Tailwind CSS** - Styling
+- **shadcn-nuxt** - UI components
+- **TypeScript** - Type safety
 
-# pnpm
-pnpm build
+## Project Structure
 
-# yarn
-yarn build
-
-# bun
-bun run build
+```
+app/
+├── components/     # Reusable UI components
+├── pages/          # Application routes
+├── middleware/     # Route middleware
+├── lib/            # Utility functions
+└── assets/         # Styles and static assets
 ```
 
-Locally preview production build:
+## Available Scripts
 
-```bash
-# npm
-npm run preview
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run preview` - Preview production build
+- `npm run generate` - Generate static site
 
-# pnpm
-pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
