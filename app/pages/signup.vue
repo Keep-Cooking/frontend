@@ -43,7 +43,7 @@ const handleSignup = async () => {
         })
 
         // redirect to home page once signed in
-        await navigateTo('/')
+        await navigateTo('/settings')
 
     } catch (err: any) {
         // Show server error message if available
