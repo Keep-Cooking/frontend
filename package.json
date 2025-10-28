@@ -3,9 +3,9 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "build": "nuxt build",
+    "build": "API_BASE=https://api.keepcooking.recipes/api nuxt build",
     "dev": "nuxt dev",
-    "generate": "nuxt generate",
+    "generate": "API_BASE=https://api.keepcooking.recipes/api nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
