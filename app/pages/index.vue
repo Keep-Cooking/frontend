@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button"
             </h1>
             
             <p class="text-xl text-muted-foreground max-w-md mx-auto">
-                Your place to learn and build of community for cooking!
+                Your place to learn and build a community for cooking!
             </p>
             
             <div class="flex gap-4 justify-center pt-4">
