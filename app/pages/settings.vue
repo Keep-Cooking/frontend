@@ -1,17 +1,13 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
+import type { MeResponse } from '@/types/api'
+import { useRoute } from 'vue-router'
 
 definePageMeta({ middleware: ['auth'] })
 
-interface MeResponse {
-    authenticated: boolean
-    user_id?: number
-    username?: string
-    email?: string
-}
-
 const { public: { apiBase } } = useRuntimeConfig()
-const user = ref<MeResponse | null>(null)
+const route = useRoute()
+const user: MeResponse = route.meta.user as MeResponse
 const isDeleting = ref(false)
 const showDeleteDialog = ref(false)
 const errorMessage = ref('')
@@ -22,13 +18,6 @@ const api = $fetch.create({
     headers: { 'Content-Type': 'application/json' },
 })
 
-onMounted(async () => {
-    try {
-        user.value = await api<MeResponse>('/me')
-    } catch (err) {
-        console.error('Failed to fetch user data:', err)
-    }
-})
 
 const handleLogout = async () => {
     try {
@@ -78,10 +67,6 @@ const handleDeleteAccount = async () => {
                     <div class="space-y-1">
                         <p class="text-sm font-medium text-gray-400">Email</p>
                         <p class="text-base">{{ user?.email || 'Loading...' }}</p>
-                    </div>
-                    <div class="space-y-1">
-                        <p class="text-sm font-medium text-gray-400">User ID</p>
-                        <p class="text-sm font-mono">{{ user?.user_id || 'Loading...' }}</p>
                     </div>
                 </div>
             </div>
