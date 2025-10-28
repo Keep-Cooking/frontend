@@ -70,7 +70,7 @@ const handleLogin = async () => {
                     <Input 
                         id="username" 
                         v-model="username"
-                        type="username" 
+                        type="text" 
                         placeholder="user123" 
                         required 
                         class="w-full border-[#FFDDAA] focus-visible:border-[#FFB448] focus-visible:ring-[#FFB448]/30"
