@@ -12,6 +12,14 @@ export default defineNuxtConfig({
     ],
   },
 
+  app: {
+    baseURL: '/',
+  },
+
+  nitro: {
+    preset: 'github_pages'
+  },
+
   modules: ['shadcn-nuxt'],
   shadcn: {
     /**
