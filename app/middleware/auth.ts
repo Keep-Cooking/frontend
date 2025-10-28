@@ -1,9 +1,4 @@
-interface MeResponse {
-    authenticated: boolean
-    user_id?: number
-    username?: string
-    email?: string
-}
+import type { MeResponse } from '@/types/api'
 
 export default defineNuxtRouteMiddleware(async (to) => {
     // Skip SSR: API-domain HttpOnly cookie isn't available to the frontend server
@@ -19,17 +14,13 @@ export default defineNuxtRouteMiddleware(async (to) => {
 
         // if the user isn't authenticated, go to the login page
         if (!me?.authenticated) {
-            return navigateTo('/login')
+            return navigateTo('/login', { replace: true, external: true })
         }
 
         // Store user data in route meta for use in pages
-        to.meta.user = {
-            id: me.user_id,
-            username: me.username,
-            email: me.email
-        }
+        to.meta.user = me;
     } catch {
         // if there's an error, go to the login page
-        return navigateTo('/login')
+        return navigateTo('/login', { replace: true, external: true })
     }
 })
