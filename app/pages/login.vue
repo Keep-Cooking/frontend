@@ -8,18 +8,38 @@ const password = ref('')
 const isLoading = ref(false)
 const errorMessage = ref('')
 
+// grab apiBase from nuxt.config runtimeConfig
+const { public: { apiBase } } = useRuntimeConfig()
+
+// create a $fetch instance with baseURL + credentials
+const api = $fetch.create({
+    baseURL: apiBase,
+    credentials: 'include', // httpOnly
+    headers: { 'Content-Type': 'application/json' },
+})
+
 const handleLogin = async () => {
     errorMessage.value = ''
     isLoading.value = true
 
     try {
-        console.log('Login attempted with:', { username: username.value, password: password.value })        
-        // api call to login
-        await new Promise(resolve => setTimeout(resolve, 1000))
+        // POST /login with username + password
+        await api('/login', {
+            method: 'POST',
+            body: {
+                username: username.value,
+                password: password.value,
+            },
+        })
 
-    } catch (error) {
-        console.error('Login error:', error)
-        errorMessage.value = 'An error occurred during login. Please try again.'
+        // redirect to home page once signed in
+        await navigateTo('/')
+
+    } catch (err: any) {
+        // Show server error message if available
+        const msg = err?.data?.error || 'An error occurred during login. Please try again.'
+        console.error('Login error:', err)
+        errorMessage.value = msg
     } finally {
         isLoading.value = false
     }

@@ -10,31 +10,46 @@ const confirmPassword = ref('')
 const isLoading = ref(false)
 const errorMessage = ref('')
 
+// grab apiBase from nuxt.config runtimeConfig
+const { public: { apiBase } } = useRuntimeConfig()
+
+// create a $fetch instance with baseURL + credentials
+const api = $fetch.create({
+    baseURL: apiBase,
+    credentials: 'include', // httpOnly
+    headers: { 'Content-Type': 'application/json' },
+})
+
 // Form submission handler
 const handleSignup = async () => {
     errorMessage.value = ''
-    
-    // very simple input validation for now
+
     if (password.value !== confirmPassword.value) {
         errorMessage.value = 'Passwords do not match'
         return
     }
-    
+
     isLoading.value = true
 
     try {
-        console.log('Signup attempted with:', { 
-            username: username.value,
-            email: email.value,
-            password: password.value
+        // POST /signup with username, email, password
+        await api('/signup', {
+            method: 'POST',
+            body: {
+                username: username.value,
+                email: email.value,
+                password: password.value,
+            },
         })
-        
-        // api call
-        await new Promise(resolve => setTimeout(resolve, 1000))
-        
-    } catch (error) {
-        console.error('Signup error:', error)
-        errorMessage.value = 'An error occurred during signup. Please try again.'
+
+        // redirect to home page once signed in
+        await navigateTo('/')
+
+    } catch (err: any) {
+        // Show server error message if available
+        const msg = err?.data?.error || 'An error occurred during signup. Please try again.'
+        console.error('Signup error:', err)
+        errorMessage.value = msg
     } finally {
         isLoading.value = false
     }
