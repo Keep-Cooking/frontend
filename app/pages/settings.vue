@@ -100,12 +100,18 @@ const handleDeleteAccount = async () => {
                 </div>
             </div>
 
-            <div class="pt-4">
+            <div class="pt-4 flex justify-between">
+                <NuxtLink 
+                    to="/catalog" 
+                    class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors"
+                >
+                    ← Recipe Catalog
+                </NuxtLink>
                 <NuxtLink 
                     to="/" 
                     class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors"
                 >
-                    ← Back to home
+                    Home →
                 </NuxtLink>
             </div>
         </div>
