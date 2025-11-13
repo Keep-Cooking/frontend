@@ -4,3 +4,14 @@ export interface MeResponse {
     username?: string
     email?: string
 }
+
+export interface SearchResponse {
+    message: string
+    image_url: string
+    video_url: string
+}
+
+export interface StreamSearchEvent {
+    event?: string
+    data: string
+}

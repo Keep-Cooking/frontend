@@ -1,5 +1,24 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
+import type { MeResponse } from '@/types/api'
+
+// Check if user is authenticated
+const { public: { apiBase } } = useRuntimeConfig()
+const user = ref<MeResponse | null>(null)
+
+// Only run on client side
+onMounted(async () => {
+  try {
+    const me = await $fetch<MeResponse>(`${apiBase}/me`, {
+      credentials: 'include'
+    })
+    if (me?.authenticated) {
+      user.value = me
+    }
+  } catch {
+    // User not authenticated, ignore error
+  }
+})
 </script>
 
 <template>
@@ -16,7 +35,22 @@ import { Button } from "@/components/ui/button"
                 Your place to learn and build a community for cooking!
             </p>
             
-            <div class="flex gap-4 justify-center pt-4">
+            <!-- Show different buttons based on authentication status -->
+            <div v-if="user?.authenticated" class="flex flex-col gap-4 justify-center pt-4 max-w-sm mx-auto">
+                <NuxtLink to="/catalog">
+                    <Button class="bg-[#FFB448] hover:bg-[#FFB448]/90 text-white font-medium px-8 w-full">
+                        🍳 Browse Recipes
+                    </Button>
+                </NuxtLink>
+                
+                <NuxtLink to="/settings">
+                    <Button class="bg-[#FFDDAA] hover:bg-[#FFC784] text-[#333333] font-medium px-8 w-full">
+                        ⚙️ Settings
+                    </Button>
+                </NuxtLink>
+            </div>
+            
+            <div v-else class="flex gap-4 justify-center pt-4">
                 <NuxtLink to="/login">
                     <Button class="bg-[#FFB448] hover:bg-[#FFB448]/90 text-white font-medium px-8">
                         Sign In
