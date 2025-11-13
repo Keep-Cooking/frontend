@@ -32,8 +32,8 @@ const handleLogin = async () => {
             },
         })
 
-        // redirect to home page once signed in
-        await navigateTo('/settings')
+        // redirect to catalog page once signed in
+        await navigateTo('/catalog')
 
     } catch (err: any) {
         // Show server error message if available
