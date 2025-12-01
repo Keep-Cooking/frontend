@@ -6,13 +6,32 @@ import type { MeResponse, SearchResponse } from '@/types/api'
 definePageMeta({ middleware: ['auth'] })
 
 const { public: { apiBase } } = useRuntimeConfig()
-const route = useRoute()
-const user: MeResponse = route.meta.user as MeResponse
 
 const searchQuery = ref('')
 const isSearching = ref(false)
-const searchResults = ref<Array<SearchResponse & { timestamp: number }>>([])
 const errorMessage = ref('')
+
+// silly loading messages
+const cookingMessages = [
+  "Hunting for the perfect ingredients...",
+  "Consulting with master chefs...",
+  "Flipping through ancient recipe scrolls...",
+  "Sprinkling some culinary magic...",
+  "Heating up the AI kitchen...",
+  "Stirring up something delicious...",
+  "Adding the perfect seasonings...",
+  "Calculating flavor combinations...",
+  "Targeting your taste preferences...",
+  "Perfecting the recipe just for you...",
+  "Gathering fresh ingredients...",
+  "Supercharging the flavor database...",
+  "Mixing culinary science with art...",
+  "Painting the perfect flavor profile...",
+  "Exploring global cuisine traditions...",
+]
+
+const currentCookingMessage = ref(cookingMessages[0])
+let messageInterval: NodeJS.Timeout | null = null
 
 const api = $fetch.create({
   baseURL: apiBase,
@@ -26,20 +45,23 @@ const handleSearch = async () => {
   errorMessage.value = ''
   isSearching.value = true
   
+  let messageIndex = 0
+  currentCookingMessage.value = cookingMessages[messageIndex]
+  
+  messageInterval = setInterval(() => {
+    messageIndex = (messageIndex + 1) % cookingMessages.length
+    currentCookingMessage.value = cookingMessages[messageIndex]
+  }, 3500)
+  
   try {
     const result = await api<SearchResponse>('/search', {
-      method: 'GET',
+      method: 'POST',
       body: {
         query: searchQuery.value.trim()
       }
     })
 
-    searchResults.value.unshift({
-      message: result.message,
-      image_url: result.image_url,
-      video_url: result.video_url,
-      timestamp: Date.now()
-    })
+    await navigateTo(`/posts/${result.post_id}`)
 
   } catch (err: any) {
     console.error('Search error:', err)
@@ -47,31 +69,22 @@ const handleSearch = async () => {
     errorMessage.value = msg
   } finally {
     isSearching.value = false
+    if (messageInterval) {
+      clearInterval(messageInterval)
+      messageInterval = null
+    }
   }
-}
-
-const clearResults = () => {
-  searchResults.value = []
-  errorMessage.value = ''
-}
-
-const getYouTubeId = (url: string) => {
-  if (!url) return null
-  const match = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([^&\n?#]+)/)
-  return match ? match[1] : null
 }
 </script>
 
 <template>
   <div class="min-h-screen bg-background p-4 sm:p-8">
     <div class="max-w-4xl mx-auto space-y-6">
-      <!-- Header -->
       <div class="space-y-2">
         <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Recipe Catalog</h1>
         <p class="text-gray-400">Search for recipes using AI-powered recommendations</p>
       </div>
 
-      <!-- Search Section -->
       <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm">
         <div class="p-6 space-y-4">
           <form @submit.prevent="handleSearch" class="flex gap-3">
@@ -91,126 +104,43 @@ const getYouTubeId = (url: string) => {
                 <div class="animate-spin h-4 w-4 border-2 border-white border-t-transparent rounded-full"></div>
                 Searching...
               </span>
-              <span v-else>🔍 Search</span>
+              <span v-else>Search</span>
             </Button>
           </form>
 
-          <!-- Loading indicator -->
           <div v-if="isSearching" class="p-6 bg-muted rounded-md">
             <div class="flex flex-col items-center gap-4">
-              <div class="flex items-center gap-3">
-                <div class="animate-spin h-6 w-6 border-3 border-[#FFB448] border-t-transparent rounded-full"></div>
-                <h3 class="text-base font-medium text-[#FFB448]">AI is searching for your recipe...</h3>
-              </div>
-              <div class="flex items-center gap-2 text-sm text-gray-400">
-                <span>🤖</span>
-                <span>Analyzing ingredients, cooking methods, and finding the perfect match</span>
-              </div>
-              <div class="w-full bg-gray-700 rounded-full h-1.5 overflow-hidden">
-                <div class="bg-[#FFB448] h-1.5 rounded-full animate-pulse w-3/4"></div>
+              <div class="animate-spin h-12 w-12 border-4 border-[#FFB448] border-t-transparent rounded-full"></div>
+              <div class="text-sm text-gray-400 text-center">
+                {{ currentCookingMessage }}
               </div>
             </div>
           </div>
 
-          <!-- Error message -->
           <div v-if="errorMessage" class="p-3 text-sm text-red-400 bg-red-950/50 bg-opacity-10 rounded-md">
             {{ errorMessage }}
           </div>
-
-          <!-- Clear results button -->
-          <div v-if="searchResults.length > 0" class="flex justify-end">
-            <Button 
-              @click="clearResults"
-              variant="outline"
-              class="text-sm"
-            >
-              Clear Results
-            </Button>
-          </div>
         </div>
       </div>
 
-      <!-- Search Results -->
-      <div v-if="searchResults.length > 0" class="space-y-6">
-        <h2 class="text-2xl font-semibold text-[#FFB448]">Search Results</h2>
-        
-        <div class="space-y-6">
-          <div 
-            v-for="result in searchResults" 
-            :key="result.timestamp"
-            class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm overflow-hidden"
-          >
-            <!-- Recipe Image -->
-            <div v-if="result.image_url" class="aspect-video w-full bg-muted">
-              <img 
-                :src="result.image_url" 
-                alt="Recipe image"
-                class="w-full h-full object-cover"
-                loading="lazy"
-              />
-            </div>
-
-            <!-- Recipe Content -->
-            <div class="p-6 space-y-4">
-              <!-- Recipe Text -->
-              <div class="prose prose-sm max-w-none">
-                <div class="text-foreground leading-relaxed" v-html="result.message.replace(/\*\*(.*?)\*\*/g, '<strong class=&quot;text-[#FFB448] font-semibold&quot;>$1</strong>').replace(/\n/g, '<br>')"></div>
-              </div>
-
-              <!-- Video Link -->
-              <div v-if="result.video_url" class="pt-4 border-t border-[#FFDDAA]">
-                <div class="flex items-center justify-between">
-                  <h4 class="text-sm font-medium text-[#FFB448]">Watch Video Tutorial</h4>
-                  <a 
-                    :href="result.video_url" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    class="text-sm text-blue-400 hover:text-blue-300 transition-colors"
-                  >
-                    Open on YouTube →
-                  </a>
-                </div>
-                
-                <!-- Embedded YouTube player if we have a valid YouTube ID -->
-                <div v-if="getYouTubeId(result.video_url)" class="mt-3 aspect-video rounded-lg overflow-hidden">
-                  <iframe
-                    :src="`https://www.youtube.com/embed/${getYouTubeId(result.video_url)}`"
-                    class="w-full h-full"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                    allowfullscreen
-                  ></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm p-6">
+        <h3 class="text-lg font-semibold text-[#FFB448] mb-3">How It Works</h3>
+        <div class="space-y-2 text-sm text-gray-400">
+          <p>Search for any recipe using natural language</p>
+          <p>Our AI will find the perfect recipe from TheMealDB</p>
+          <p>A new post will be created with your recipe</p>
+          <p>Upload a photo of your creation to get rated</p>
+          <p>Earn points and level up as you cook!</p>
+          <p>Publish your best dishes to the community feed</p>
         </div>
       </div>
 
-      <!-- Empty state -->
-      <div v-else-if="!isSearching" class="text-center py-12">
-        <div class="space-y-4">
-          <div class="text-6xl">🍳</div>
-          <h3 class="text-xl font-medium text-[#FFB448]">Start Your Culinary Journey</h3>
-          <p class="text-gray-400 max-w-md mx-auto">
-            Search for any dish, ingredient, or cooking style and let our AI find the perfect recipe for you.
-          </p>
-        </div>
-      </div>
-
-      <!-- Navigation -->
       <div class="pt-4 flex justify-between">
-        <NuxtLink 
-          to="/settings" 
-          class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors"
-        >
-          ← Settings
+        <NuxtLink to="/feed" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
+          ← Community Feed
         </NuxtLink>
-        <NuxtLink 
-          to="/" 
-          class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors"
-        >
-          Home →
+        <NuxtLink to="/my-posts" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
+          My Posts →
         </NuxtLink>
       </div>
     </div>
