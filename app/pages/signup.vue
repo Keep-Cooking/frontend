@@ -57,7 +57,10 @@ const handleSignup = async () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-background">
+  <div class="min-h-screen flex flex-col bg-background">
+    <Navbar />
+    
+    <div class="flex-1 flex items-center justify-center">
         <div class="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-xl border border-[#FFDDAA]">
             <div class="text-center">
                 <img class="w-[300px] absolute left-1/2 transform -translate-x-1/2 -translate-y-56" 
@@ -149,14 +152,15 @@ const handleSignup = async () => {
                 </div>
             </div>
 
-            <div class="text-center">
-                <NuxtLink 
-                    to="/login" 
-                    class="w-full inline-block py-2.5 px-4 rounded-md text-center bg-[#FFDDAA] text-[#333333] hover:bg-[#FFC784] transition-colors duration-200 font-medium"
-                >
-                    Sign in instead
-                </NuxtLink>
-            </div>
+        <div class="text-center">
+          <NuxtLink 
+            to="/login" 
+            class="w-full inline-block py-2.5 px-4 rounded-md text-center bg-[#FFDDAA] text-[#333333] hover:bg-[#FFC784] transition-colors duration-200 font-medium"
+          >
+            Sign in instead
+          </NuxtLink>
         </div>
+      </div>
     </div>
+  </div>
 </template>

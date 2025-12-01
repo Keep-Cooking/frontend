@@ -68,12 +68,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto space-y-6">
-      <div class="space-y-2">
-        <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">My Profile</h1>
-        <p class="text-gray-400">Track your culinary journey</p>
-      </div>
+  <div class="min-h-screen bg-background">
+    <Navbar :user="user" />
+    
+    <div class="p-4 sm:p-8">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">My Profile</h1>
+          <p class="text-gray-400">Track your culinary journey</p>
+        </div>
 
       <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm p-6">
         <div class="flex items-center gap-6">
@@ -89,6 +92,13 @@ onMounted(() => {
                 ⭐ {{ userPoints }} points
               </span>
             </div>
+          </div>
+          <div>
+            <NuxtLink to="/settings">
+              <Button variant="outline" class="border-[#FFDDAA]">
+                Settings
+              </Button>
+            </NuxtLink>
           </div>
         </div>
 
@@ -224,15 +234,6 @@ onMounted(() => {
           </div>
         </div>
       </div>
-
-      <!-- Navigation -->
-      <div class="pt-4 flex justify-between">
-        <NuxtLink to="/settings" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          ← Settings
-        </NuxtLink>
-        <NuxtLink to="/feed" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          Community Feed →
-        </NuxtLink>
       </div>
     </div>
   </div>
