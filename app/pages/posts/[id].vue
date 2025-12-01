@@ -146,28 +146,31 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto space-y-6">
-      <div v-if="isLoading" class="text-center py-12">
-        <div class="animate-spin h-8 w-8 border-4 border-[#FFB448] border-t-transparent rounded-full mx-auto mb-4"></div>
-        <p class="text-gray-400">Loading recipe...</p>
-      </div>
+  <div class="min-h-screen bg-background">
+    <Navbar :user="user" />
+    
+    <div class="p-4 sm:p-8">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div v-if="isLoading" class="text-center py-12">
+          <div class="animate-spin h-8 w-8 border-4 border-[#FFB448] border-t-transparent rounded-full mx-auto mb-4"></div>
+          <p class="text-gray-400">Loading recipe...</p>
+        </div>
 
-      <div v-if="errorMessage" class="p-4 text-sm rounded-md" :class="errorMessage.includes('successfully') || errorMessage.includes('Published') ? 'text-green-400 border-green-500 bg-green-400/20' : 'text-red-400 border-red-500 bg-red-400/20'">
-        {{ errorMessage }}
-      </div>
+        <div v-if="errorMessage" class="p-4 text-sm rounded-md" :class="errorMessage.includes('successfully') || errorMessage.includes('Published') ? 'text-green-400 border-green-500 bg-green-400/20' : 'text-red-400 border-red-500 bg-red-400/20'">
+          {{ errorMessage }}
+        </div>
 
-      <div v-if="post" class="space-y-6">
-        <div class="space-y-2">
-          <div class="flex items-start justify-between">
-            <div class="flex-1">
-              <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">{{ post.recipe.title }}</h1>
-              <p class="text-gray-400 mt-2">by @{{ post.username }}</p>
-            </div>
-            <div v-if="post.rating" class="text-right">
-              <div class="text-4xl">{{ '🔥'.repeat(Math.round(post.rating)) }}</div>
-              <p class="text-sm text-gray-400">{{ post.rating.toFixed(1) }} rating</p>
-            </div>
+        <div v-if="post" class="space-y-6">
+          <div class="space-y-2">
+            <div class="flex items-start justify-between">
+              <div class="flex-1">
+                <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">{{ post.recipe.title }}</h1>
+                <p class="text-gray-400 mt-2">by @{{ post.username }}</p>
+              </div>
+              <div v-if="post.rating" class="text-right">
+                <div class="text-4xl">{{ '🔥'.repeat(Math.round(post.rating)) }}</div>
+                <p class="text-sm text-gray-400">{{ post.rating.toFixed(1) }} rating</p>
+              </div>
           </div>
 
           <div class="flex items-center gap-2">
@@ -336,17 +339,10 @@ onMounted(() => {
           </div>
         </div>
       </div>
-
-      <div class="pt-4 flex justify-between">
-        <NuxtLink to="/my-posts" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          ← My Posts
-        </NuxtLink>
-        <NuxtLink to="/feed" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          Community Feed →
-        </NuxtLink>
       </div>
     </div>
 
+    <!-- Level Up Modal -->
     <div 
       v-if="showLevelUpModal && ratingResponse" 
       class="fixed inset-0 z-50 flex items-center justify-center"

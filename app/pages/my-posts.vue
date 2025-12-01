@@ -63,12 +63,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto space-y-6">
-      <div class="space-y-2">
-        <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">My Posts</h1>
-        <p class="text-gray-400">Manage your saved and shared recipes</p>
-      </div>
+  <div class="min-h-screen bg-background">
+    <Navbar :user="user" />
+    
+    <div class="p-4 sm:p-8">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">My Posts</h1>
+          <p class="text-gray-400">Manage your saved and shared recipes</p>
+        </div>
 
       <div v-if="isLoading" class="text-center py-12">
         <div class="animate-spin h-8 w-8 border-4 border-[#FFB448] border-t-transparent rounded-full mx-auto mb-4"></div>
@@ -147,15 +150,6 @@ onMounted(() => {
           </Button>
         </NuxtLink>
       </div>
-
-      <!-- Navigation -->
-      <div class="pt-4 flex justify-between">
-        <NuxtLink to="/feed" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          ← Community Feed
-        </NuxtLink>
-        <NuxtLink to="/profile" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          Profile →
-        </NuxtLink>
       </div>
     </div>
   </div>

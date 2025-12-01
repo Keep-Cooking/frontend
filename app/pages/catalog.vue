@@ -6,6 +6,8 @@ import type { MeResponse, SearchResponse } from '@/types/api'
 definePageMeta({ middleware: ['auth'] })
 
 const { public: { apiBase } } = useRuntimeConfig()
+const route = useRoute()
+const user: MeResponse = route.meta.user as MeResponse
 
 const searchQuery = ref('')
 const isSearching = ref(false)
@@ -78,12 +80,15 @@ const handleSearch = async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto space-y-6">
-      <div class="space-y-2">
-        <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Recipe Catalog</h1>
-        <p class="text-gray-400">Search for recipes using AI-powered recommendations</p>
-      </div>
+  <div class="min-h-screen bg-background">
+    <Navbar :user="user" />
+    
+    <div class="p-4 sm:p-8">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Recipe Catalog</h1>
+          <p class="text-gray-400">Search for recipes using AI-powered recommendations</p>
+        </div>
 
       <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm">
         <div class="p-6 space-y-4">
@@ -134,14 +139,6 @@ const handleSearch = async () => {
           <p>Publish your best dishes to the community feed</p>
         </div>
       </div>
-
-      <div class="pt-4 flex justify-between">
-        <NuxtLink to="/feed" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          ← Community Feed
-        </NuxtLink>
-        <NuxtLink to="/my-posts" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          My Posts →
-        </NuxtLink>
       </div>
     </div>
   </div>

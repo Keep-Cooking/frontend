@@ -87,12 +87,15 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background p-4 sm:p-8">
-    <div class="max-w-4xl mx-auto space-y-6">
-      <div class="space-y-2">
-        <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Community Feed</h1>
-        <p class="text-gray-400">Discover amazing recipes from the community</p>
-      </div>
+  <div class="min-h-screen bg-background">
+    <Navbar :user="user" />
+    
+    <div class="p-4 sm:p-8">
+      <div class="max-w-4xl mx-auto space-y-6">
+        <div class="space-y-2">
+          <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Community Feed</h1>
+          <p class="text-gray-400">Discover amazing recipes from the community</p>
+        </div>
 
       <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm p-6">
         <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -219,14 +222,6 @@ onMounted(() => {
           </Button>
         </NuxtLink>
       </div>
-
-      <div class="pt-4 flex justify-between">
-        <NuxtLink to="/my-posts" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          ← My Posts
-        </NuxtLink>
-        <NuxtLink to="/catalog" class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors">
-          Search Recipes →
-        </NuxtLink>
       </div>
     </div>
   </div>

@@ -47,6 +47,7 @@ const handleDeleteAccount = async () => {
 </script>
 
 <template>
+    <Navbar :user="user" />
     <div class="min-h-screen bg-background p-8">
         <div class="max-w-2xl mx-auto space-y-6">
             <div class="space-y-2">

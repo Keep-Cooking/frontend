@@ -47,12 +47,15 @@ const handleLogin = async () => {
 </script>
 
 <template>
-    <div class="min-h-screen flex items-center justify-center bg-background">
-        <div class="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-xl border border-[#FFDDAA]">
-            <div class="text-center">
-                
-                    <img class="w-[300px] absolute left-1/2 transform -translate-x-1/2 -translate-y-56" 
-                         src="/KeepCookingPan.png" alt="Pan icon" width="120" height="120">
+  <div class="min-h-screen flex flex-col bg-background">
+    <Navbar />
+    
+    <div class="flex-1 flex items-center justify-center">
+      <div class="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-xl border border-[#FFDDAA]">
+        <div class="text-center">
+          
+          <img class="w-[300px] absolute left-1/2 transform -translate-x-1/2 -translate-y-56" 
+               src="/KeepCookingPan.png" alt="Pan icon" width="120" height="120">
                     <h1 class="text-6xl font-bold tracking-tight mb-6 text-[#FFB448] relative z-10">Keep Cooking</h1>
                 
                 <div class="relative flex py-3">
@@ -115,16 +118,17 @@ const handleLogin = async () => {
                         New to Keep Cooking?
                     </span>
                 </div>
-            </div>
-
-            <div class="text-center">
-                <NuxtLink 
-                    to="/signup" 
-                    class="w-full inline-block py-2.5 px-4 rounded-md text-center bg-[#FFDDAA] text-[#333333] hover:bg-[#FFC784] transition-colors duration-200 font-medium"
-                >
-                    Create an account
-                </NuxtLink>
-            </div>
         </div>
+
+        <div class="text-center">
+          <NuxtLink 
+            to="/signup" 
+            class="w-full inline-block py-2.5 px-4 rounded-md text-center bg-[#FFDDAA] text-[#333333] hover:bg-[#FFC784] transition-colors duration-200 font-medium"
+          >
+            Create an account
+          </NuxtLink>
+        </div>
+      </div>
     </div>
+  </div>
 </template> 
