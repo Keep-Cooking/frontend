@@ -32,8 +32,8 @@ const handleLogin = async () => {
             },
         })
 
-        // redirect to catalog page once signed in
-        await navigateTo('/catalog')
+        // redirect to feed page once signed in
+        await navigateTo('/feed')
 
     } catch (err: any) {
         // Show server error message if available

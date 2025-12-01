@@ -20,7 +20,7 @@ export default defineNuxtConfig({
     preset: 'github_pages'
   },
 
-  modules: ['shadcn-nuxt'],
+  modules: ['shadcn-nuxt', '@nuxtjs/mdc'],
   shadcn: {
     /**
      * Prefix for all the imported component

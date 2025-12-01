@@ -2,11 +2,9 @@
 import { Button } from "@/components/ui/button"
 import type { MeResponse } from '@/types/api'
 
-// Check if user is authenticated
 const { public: { apiBase } } = useRuntimeConfig()
 const user = ref<MeResponse | null>(null)
 
-// Only run on client side
 onMounted(async () => {
   try {
     const me = await $fetch<MeResponse>(`${apiBase}/me`, {
@@ -37,15 +35,21 @@ onMounted(async () => {
             
             <!-- Show different buttons based on authentication status -->
             <div v-if="user?.authenticated" class="flex flex-col gap-4 justify-center pt-4 max-w-sm mx-auto">
-                <NuxtLink to="/catalog">
+                <NuxtLink to="/feed">
                     <Button class="bg-[#FFB448] hover:bg-[#FFB448]/90 text-white font-medium px-8 w-full">
-                        🍳 Browse Recipes
+                        Community Feed
                     </Button>
                 </NuxtLink>
                 
-                <NuxtLink to="/settings">
+                <NuxtLink to="/catalog">
                     <Button class="bg-[#FFDDAA] hover:bg-[#FFC784] text-[#333333] font-medium px-8 w-full">
-                        ⚙️ Settings
+                        Search Recipes
+                    </Button>
+                </NuxtLink>
+
+                <NuxtLink to="/profile">
+                    <Button variant="outline" class="font-medium px-8 w-full">
+                        My Profile
                     </Button>
                 </NuxtLink>
             </div>
