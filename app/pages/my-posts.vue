@@ -106,7 +106,6 @@ onMounted(() => {
             </NuxtLink>
             
             <div class="flex items-center gap-4 text-sm text-gray-400">
-              <span>👍 {{ post.votes }}</span>
               <span v-if="post.rating">{{ '🔥'.repeat(Math.round(post.rating)) }} {{ post.rating.toFixed(1) }}</span>
               <span v-if="post.hidden" class="text-yellow-500">🔒 Hidden</span>
               <span v-else class="text-green-500">✅ Published</span>

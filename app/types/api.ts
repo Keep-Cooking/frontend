@@ -5,6 +5,7 @@ export interface MeResponse {
     email?: string
     points?: number
     level?: number
+    admin?: boolean
 }
 
 export interface SearchResponse {
@@ -25,17 +26,14 @@ export interface Post {
     }
     image_url: string | null
     rating: number | null
-    votes: number
     username: string
     date_posted: string
-    user_vote: 'upvote' | 'downvote' | null
 }
 
 export interface MyPost {
     id: number
     title: string
     image_url: string | null
-    votes: number
     rating: number | null
     hidden: boolean
 }
@@ -51,7 +49,6 @@ export interface PostDetail {
         video_url: string | null
     }
     image_url: string | null
-    votes: number
     rating: number | null
     hidden: boolean
     date_posted: string
