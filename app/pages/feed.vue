@@ -22,7 +22,7 @@ const errorMessage = ref('')
 const page = ref(1)
 const pageSize = 20
 const totalPages = ref(1)
-const sortBy = ref<'date_posted' | 'rating'>('date_posted')
+const sortBy = ref<'date_posted' | 'rating'>('rating')
 const order = ref<'asc' | 'desc'>('desc')
 const minRating = ref<number | null>(null)
 
@@ -117,8 +117,8 @@ onMounted(() => {
               v-model="sortBy"
               class="w-full px-3 py-2 bg-background border border-[#FFDDAA] rounded-md focus:outline-none focus:border-[#FFB448]"
             >
-              <option value="date_posted">Date Posted</option>
               <option value="rating">Rating</option>
+              <option value="date_posted">Date Posted</option>
             </select>
           </div>
           
