@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import type { MeResponse, Post, PostsResponse } from '@/types/api'
 
 definePageMeta({ middleware: ['auth'] })
@@ -74,7 +73,7 @@ const deletePost = async (postId: number) => {
   
   try {
     await api(`/posts/${postId}`, { method: 'DELETE' })
-    await navigateTo('/feed')
+    loadPosts(true);
   } catch (err: any) {
     console.error('Delete post error:', err)
     alert(err?.data?.error || 'Failed to delete post')
