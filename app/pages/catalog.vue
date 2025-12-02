@@ -130,14 +130,14 @@ const handleSearch = async () => {
 
       <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm p-6">
         <h3 class="text-lg font-semibold text-[#FFB448] mb-3">How It Works</h3>
-        <div class="space-y-2 text-sm text-gray-400">
-          <p>Search for any recipe using natural language</p>
-          <p>Our AI will find the perfect recipe from TheMealDB</p>
-          <p>A new post will be created with your recipe</p>
-          <p>Upload a photo of your creation to get rated</p>
-          <p>Earn points and level up as you cook!</p>
-          <p>Publish your best dishes to the community feed</p>
-        </div>
+        <ul class="space-y-2 text-sm text-gray-400">
+          <li>Search for any recipe using natural language</li>
+          <li>Our AI will find the perfect recipe from TheMealDB</li>
+          <li>A new post will be created with your recipe</li>
+          <li>Upload a photo of your creation to get rated</li>
+          <li>Earn points and level up as you cook!</li>
+          <li>Publish your best dishes to the community feed</li>
+        </ul>
       </div>
       </div>
     </div>

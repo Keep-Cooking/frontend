@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { Button } from "@/components/ui/button"
 import type { MeResponse, PostDetail, RatingResponse } from '@/types/api'
+import { marked } from 'marked';
 
 definePageMeta({ middleware: ['auth'] })
 
@@ -204,7 +205,7 @@ onMounted(() => {
 
         <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm p-6">
           <div class="prose prose-sm max-w-none">
-            <div class="text-foreground leading-relaxed whitespace-pre-wrap">{{ post.recipe.message }}</div>
+            <div class="prose prose-sm max-w-none" v-html="marked.parse(post.recipe.message)"></div>
           </div>
         </div>
 
@@ -285,22 +286,23 @@ onMounted(() => {
             </Button>
           </div>
 
-          <div v-if="ratingResponse" class="p-4 border border-green-500/30 rounded-md space-y-3">
-            <div class="flex items-center justify-between">
-              <h4 class="font-semibold text-green-400">AI Feedback</h4>
-              <div class="text-2xl">{{ '🔥'.repeat(Math.round(ratingResponse.rating)) }}</div>
-            </div>
-            <p class="text-sm text-gray-300">{{ ratingResponse.message }}</p>
-            <div class="flex items-center gap-4 text-sm text-gray-400">
-              <span>{{ ratingResponse.user_points }} points</span>
-              <span>Level {{ ratingResponse.user_level }}</span>
-              <span v-if="ratingResponse.level_up" class="text-green-400 font-semibold">🎉 Level Up!</span>
-            </div>
-          </div>
         </div>
-
-       
-
+        
+        <div v-if="ratingResponse" class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm p-6 space-y-4">
+            <div class="p-4 border border-green-500/30 rounded-md space-y-3">
+                <div class="flex items-center justify-between">
+                    <h4 class="font-semibold text-green-400">AI Feedback</h4>
+                    <div class="text-2xl">{{ '🔥'.repeat(Math.round(ratingResponse.rating)) }}</div>
+                </div>
+                <p class="text-sm text-black-300">{{ ratingResponse.message }}</p>
+                <div class="flex items-center gap-4 text-sm text-black-400">
+                    <span>{{ ratingResponse.user_points }} points</span>
+                    <span>Level {{ ratingResponse.user_level }}</span>
+                    <span v-if="ratingResponse.level_up" class="text-green-400 font-semibold">🎉 Level Up!</span>
+                </div>
+            </div>
+        </div>
+  
         <div v-if="post.user_id === user.user_id" class="space-y-3">
           <div v-if="post.hidden && post.rating" class="rounded-lg border-2 border-[#FFB448] bg-[#FFB448]/10 p-4">
             <div class="flex items-start gap-3 mb-3">

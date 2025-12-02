@@ -119,15 +119,6 @@ onMounted(() => {
               </NuxtLink>
               
               <Button 
-                v-if="post.hidden"
-                @click="publishPost(post.id)"
-                class="flex-1 bg-[#FFB448] hover:bg-[#FFB448]/90 text-white"
-                size="sm"
-              >
-                Publish
-              </Button>
-              
-              <Button 
                 @click="deletePost(post.id)"
                 variant="destructive"
                 size="sm"

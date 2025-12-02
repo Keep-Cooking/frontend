@@ -16,8 +16,6 @@ const api = $fetch.create({
 
 const myPosts = ref<MyPost[]>([])
 const isLoading = ref(false)
-const userPoints = ref(0)
-const userLevel = ref(1)
 
 // Stats computed from posts
 const stats = computed(() => {
@@ -27,8 +25,6 @@ const stats = computed(() => {
   const avgRating = ratedPosts.length > 0 ? totalRating / ratedPosts.length : 0
   
   // Calculate points from ratings (1 flame = 1 point)
-  userPoints.value = Math.floor(totalRating)
-  userLevel.value = Math.floor(userPoints.value / 20)
   
   return {
     totalPosts: myPosts.value.length,
@@ -41,10 +37,10 @@ const stats = computed(() => {
 // Calculate progress to next level (20 points per level)
 const levelProgress = computed(() => {
   return {
-    currentLevel: userLevel.value,
-    pointsInLevel: userPoints.value % 20,
+    currentLevel: user?.level ?? 0,
+    pointsInLevel: (user?.points ?? 0) % 20,
     pointsToNextLevel: 20,
-    percentage: (userPoints.value % 20) / 20 * 100
+    percentage: ((user?.points ?? 0) % 20) / 20 * 100
   }
 })
 
@@ -81,14 +77,14 @@ onMounted(() => {
         <div class="flex items-center gap-6">
           <div class="w-24 h-24 rounded-full bg-[#FFB448]/20 flex items-center justify-center text-center text-4xl">👨‍🍳</div>
           <div class="flex-1 space-y-2">
-            <h2 class="text-2xl font-bold">@{{ user.username }}</h2>
-            <p class="text-gray-400">{{ user.email }}</p>
+            <h2 class="text-2xl font-bold">@{{ user?.username ?? "" }}</h2>
+            <p class="text-gray-400">{{ user?.email ?? "" }}</p>
             <div class="flex items-center gap-4 text-sm">
               <span class="px-3 py-1 rounded-full bg-[#FFB448]/20 text-[#FFB448] font-semibold">
                 Level {{ levelProgress.currentLevel }}
               </span>
               <span class="text-gray-400">
-                ⭐ {{ userPoints }} points
+                ⭐ {{ user?.points ?? 0 }} points
               </span>
             </div>
           </div>
@@ -103,7 +99,7 @@ onMounted(() => {
 
         <div class="mt-6 space-y-2">
           <div class="flex items-center justify-between text-sm">
-            <span class="text-gray-400">Progress to Level {{ levelProgress.currentLevel + 1 }}</span>
+            <span class="text-gray-400">Progress to Level {{ (levelProgress.currentLevel ?? 0) + 1 }}</span>
             <span class="text-[#FFB448] font-semibold">{{ levelProgress.pointsInLevel }}/{{ levelProgress.pointsToNextLevel }} points</span>
           </div>
           <div class="w-full bg-gray-700 rounded-full h-2.5 overflow-hidden">
