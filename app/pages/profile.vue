@@ -35,7 +35,6 @@ const stats = computed(() => {
     publishedPosts: publishedPosts.length,
     recipesAttempted: ratedPosts.length,
     averageRating: avgRating,
-    totalVotes: myPosts.value.reduce((sum, p) => sum + p.votes, 0),
   }
 })
 
@@ -160,7 +159,6 @@ onMounted(() => {
               </NuxtLink>
               <div class="flex items-center gap-3 text-sm text-gray-400 mt-1">
                 <span v-if="post.rating">{{ '🔥'.repeat(Math.round(post.rating)) }} {{ post.rating.toFixed(1) }}</span>
-                <span>👍 {{ post.votes }}</span>
                 <span v-if="post.hidden" class="text-yellow-500">🔒 Hidden</span>
               </div>
             </div>

@@ -307,7 +307,7 @@ onMounted(() => {
               <div class="text-2xl">📢</div>
               <div class="flex-1">
                 <h4 class="font-semibold text-[#FFB448] mb-1">Ready to Share?</h4>
-                <p class="text-sm text-gray-400">Your creation has been rated! Publish it to the community feed to share with others and earn votes.</p>
+                <p class="text-sm text-gray-400">Your creation has been rated! Publish it to the community feed to share with others.</p>
               </div>
             </div>
             <Button 

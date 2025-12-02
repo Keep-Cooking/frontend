@@ -69,6 +69,18 @@ const loadMore = () => {
   }
 }
 
+const deletePost = async (postId: number) => {
+  if (!confirm('Are you sure you want to delete this post?')) return
+  
+  try {
+    await api(`/posts/${postId}`, { method: 'DELETE' })
+    await navigateTo('/feed')
+  } catch (err: any) {
+    console.error('Delete post error:', err)
+    alert(err?.data?.error || 'Failed to delete post')
+  }
+}
+
 const formatDate = (dateStr: string) => {
   const date = new Date(dateStr)
   return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
@@ -171,6 +183,14 @@ onMounted(() => {
           <div class="p-4 border-b border-[#FFDDAA]/50">
             <div class="flex items-center justify-between">
               <div>
+                <Button
+                    v-if="user?.admin"
+                    @click="deletePost(post.id)"
+                    variant="destructive"
+                    size="sm"
+                >
+                🗑️
+                </Button>
                 <NuxtLink :to="`/posts/${post.id}`" class="hover:text-[#FFB448] transition-colors">
                   <h3 class="text-xl font-semibold">{{ post.recipe.title }}</h3>
                 </NuxtLink>

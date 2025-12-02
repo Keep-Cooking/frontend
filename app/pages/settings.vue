@@ -58,6 +58,9 @@ const handleDeleteAccount = async () => {
             <div class="rounded-lg border border-[#FFDDAA] bg-card shadow-sm">
                 <div class="p-6 space-y-1.5 border-b border-[#FFDDAA]">
                     <h2 class="text-2xl font-semibold">Account Information</h2>
+                    <div v-if="user?.admin" class="space-y-1">
+                        <p class="text-sm font-medium text-red-400">Administrator User</p>
+                    </div>
                     <p class="text-sm text-gray-400">Your personal details</p>
                 </div>
                 <div class="p-6 space-y-4">
