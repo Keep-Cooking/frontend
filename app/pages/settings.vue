@@ -51,7 +51,14 @@ const handleDeleteAccount = async () => {
     <div class="min-h-screen bg-background p-8">
         <div class="max-w-2xl mx-auto space-y-6">
             <div class="space-y-2">
-                <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Settings</h1>
+                <div class="flex gap-2">
+                    <NuxtLink to="/profile" class="flex items-center justify-center w-10 h-10 rounded-lg border border-[#FFDDAA] hover:bg-[#FFB448]/10 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-[#FFB448]">
+                            <path d="m15 18-6-6 6-6"/>
+                        </svg>
+                    </NuxtLink>
+                    <h1 class="text-4xl font-bold tracking-tight text-[#FFB448]">Settings</h1>
+                </div>
                 <p class="text-gray-400">Manage your account settings</p>
             </div>
 
@@ -102,21 +109,6 @@ const handleDeleteAccount = async () => {
                         {{ errorMessage }}
                     </div>
                 </div>
-            </div>
-
-            <div class="pt-4 flex justify-between">
-                <NuxtLink 
-                    to="/catalog" 
-                    class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors"
-                >
-                    ← Recipe Catalog
-                </NuxtLink>
-                <NuxtLink 
-                    to="/" 
-                    class="text-sm text-gray-400 hover:text-[#FFB448] transition-colors"
-                >
-                    Home →
-                </NuxtLink>
             </div>
         </div>
 

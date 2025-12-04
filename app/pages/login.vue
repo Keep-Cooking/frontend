@@ -48,16 +48,15 @@ const handleLogin = async () => {
 
 <template>
   <div class="min-h-screen flex flex-col bg-background">
-    <Navbar />
     
     <div class="flex-1 flex items-center justify-center">
       <div class="w-full max-w-md p-8 space-y-8 bg-card rounded-lg shadow-xl border border-[#FFDDAA]">
         <div class="text-center">
-          
-          <img class="w-[300px] absolute left-1/2 transform -translate-x-1/2 -translate-y-56" 
+            <NuxtLink to="/">
+                <img class="w-[300px] absolute left-1/2 transform -translate-x-1/2 -translate-y-56" 
                src="/KeepCookingPan.png" alt="Pan icon" width="120" height="120">
-                    <h1 class="text-6xl font-bold tracking-tight mb-6 text-[#FFB448] relative z-10">Keep Cooking</h1>
-                
+            </NuxtLink>
+                <h1 class="text-6xl font-bold tracking-tight mb-6 text-[#FFB448] relative z-10">Keep Cooking</h1>
                 <div class="relative flex py-3">
                     <div class="absolute inset-0 flex items-center">
                         <Separator class="w-full bg-[#FFDDAA]" />
