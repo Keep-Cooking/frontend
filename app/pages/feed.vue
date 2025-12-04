@@ -81,8 +81,9 @@ const deletePost = async (postId: number) => {
 }
 
 const formatDate = (dateStr: string) => {
-  const date = new Date(dateStr)
-  return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+  // const date = new Date(dateStr)
+  //return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })
+  return date;
 }
 
 watch([sortBy, order, minRating], () => {
